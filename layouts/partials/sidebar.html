@@ -1,6 +1,14 @@
 <div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
   <div class="sidebar-content">
-    <h1 class="sidebar-heading"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></h1>
+    <h1 class="sidebar-heading"><a href="{{ .Site.BaseURL }}">
+    {{ with .Site.Params.logoimage }}
+      {{ $strippedSlash := ($.Site.Params.logoimage | replaceRE "^(/)+(.*)" "$2") }}
+      {{ $logoImage := (printf "%s%s" $.Site.BaseURL $strippedSlash) }}
+      <img src="{{$logoImage}}" alt="Logo Image" style="margin:0 0;">
+    {{else}}
+      {{ .Site.Title }}
+    {{end}}
+  </a></h1>
     {{ range .Site.Params.sidebarAbout }}
       <p class="sidebar-p">{{ . | safeHTML }}</p>
     {{ end }}
